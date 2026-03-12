@@ -1,1 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping List</title>
+</head>
+<body>
 
+<h1>Shopping List</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Item name" required>
+    <input type="number" name="quantity" placeholder="Quantity" required>
+    <button type="submit">Add Item</button>
+</form>
+
+<ul>
+{% for item in items %}
+    <li>
+        {% if item.purchased %}
+            <strike>{{ item.name }} ({{ item.quantity }})</strike>
+        {% else %}
+            {{ item.name }} ({{ item.quantity }})
+        {% endif %}
+
+        <a href="/toggle/{{item.id}}/">Toggle</a>
+        <a href="/delete/{{item.id}}/">Delete</a>
+    </li>
+{% endfor %}
+</ul>
+
+</body>
+</html>
